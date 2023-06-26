@@ -26,26 +26,24 @@ function checkKey(e) {
 // alert(rock);
 
 
-document.onkeyup = createRock;
+// setInterval(createRock, 1000);
+
+document.onclick = createRock;
+
+function moveRock(rock) {
+    document.getElementById(rock).className = "btn btn-warning";
+    if (rock[0] < 5) {
+        rock = ++rock[0] + rock[1];
+        alert(rock);
+        document.getElementById(rock).className = "btn btn-danger";
+        // setTimeout(moveRock(rock), 3000);
+    } else {
+        clearInterval(interval);
+    }
+}
+
 function createRock {
     let rock = "0" + Math.floor(Math.random() * 7);
     document.getElementById(rock).className = "btn btn-danger";
-    let i = rock[0];
-    setTimeout(() => {
-      }, 5000);
-    // while (i < 5) {
-        // setTimeout("console.log('hi')", 1000);
-        // document.getElementById(rock).className = "btn btn-warning";
-        // rock = i + rock[1];
-        // document.getElementById(rock).className = "btn btn-danger";
-        setTimeout(() => {
-            document.getElementById(rock).className = "btn btn-warning";
-            rock = i + rock[1];
-            alert(rock);
-            document.getElementById(rock).className = "btn btn-danger";
-        }, 10000);
-        ++i;
-        a
-    }
-    document.getElementById(rock).className = "btn btn-warning";
+    let interval = setInterval(moveRock(), 100, rock);
 }
