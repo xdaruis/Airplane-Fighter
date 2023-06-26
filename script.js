@@ -21,3 +21,31 @@ function checkKey(e) {
         document.getElementById(playerId).className = "btn btn-dark";
     }
 }
+
+// let rock = "0" + Math.floor(Math.random() * 7);
+// alert(rock);
+
+
+document.onkeyup = createRock;
+function createRock {
+    let rock = "0" + Math.floor(Math.random() * 7);
+    document.getElementById(rock).className = "btn btn-danger";
+    let i = rock[0];
+    setTimeout(() => {
+      }, 5000);
+    // while (i < 5) {
+        // setTimeout("console.log('hi')", 1000);
+        // document.getElementById(rock).className = "btn btn-warning";
+        // rock = i + rock[1];
+        // document.getElementById(rock).className = "btn btn-danger";
+        setTimeout(() => {
+            document.getElementById(rock).className = "btn btn-warning";
+            rock = i + rock[1];
+            alert(rock);
+            document.getElementById(rock).className = "btn btn-danger";
+        }, 10000);
+        ++i;
+        a
+    }
+    document.getElementById(rock).className = "btn btn-warning";
+}
