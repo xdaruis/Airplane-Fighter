@@ -6,9 +6,7 @@ let rock = "0" + Math.floor(Math.random() * 7);
 document.getElementById(rock).className = "btn btn-danger";
 
 let rockSpeed = window.setInterval(dropRock, 100);
-
 let scoreValue = 0;
-let gameState = true;
 
 function movePlayer(e) {
     e = e || window.event;
@@ -31,9 +29,8 @@ function movePlayer(e) {
 
 function gameOver() {
     document.getElementById("lostMessage").innerHTML = "GAME OVER";
-    gameState = false;
     document.onkeydown = null;
-    clearInterval(rockSpeed)
+    clearInterval(rockSpeed);
 }
 
 function checkIfRockHit() {
