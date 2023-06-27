@@ -33,6 +33,7 @@ function gameOver() {
     document.getElementById("lostMessage").innerHTML = "GAME OVER";
     gameState = false;
     document.onkeydown = null;
+    clearInterval(rockSpeed)
 }
 
 function checkIfRockHit() {
@@ -43,11 +44,6 @@ function checkIfRockHit() {
 }
 
 function dropRock() {
-    if (!gameState) {
-        clearInterval(rockSpeed);
-        return;
-    }
-    document.getElementById(rock).className = "btn btn-danger";
     if (rock[0] < 5) {
         checkIfRockHit();
         rock = ++rock[0] + rock[1];
