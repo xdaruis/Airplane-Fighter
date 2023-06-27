@@ -12,17 +12,14 @@ let gameState = true;
 
 function moveShip(e) {
     e = e || window.event;
+    document.getElementById(playerId).className = "btn btn-warning";
     if ((e.keyCode == '38' || e.keyCode == '87') && playerId[0] > 0) { // up
-        document.getElementById(playerId).className = "btn btn-warning";
         playerId = --playerId[0] + playerId[1];
     } else if ((e.keyCode == '40' || e.keyCode == '83') && playerId[0] < 5) { // down
-        document.getElementById(playerId).className = "btn btn-warning";
         playerId = ++playerId[0] + playerId[1];
     } else if ((e.keyCode == '37' || e.keyCode == '65') && playerId[1] > 0) { // left
-        document.getElementById(playerId).className = "btn btn-warning";
         playerId = playerId[0] + --playerId[1];
     } else if ((e.keyCode == '39' || e.keyCode == '68') && playerId[1] < 6) { // right
-        document.getElementById(playerId).className = "btn btn-warning";
         playerId = playerId[0] + ++playerId[1];
     }
     if (document.getElementById(playerId).className === "btn btn-danger") {
@@ -33,7 +30,7 @@ function moveShip(e) {
 }
 
 function gameOver() {
-    document.getElementById("lost").innerHTML = "GAME OVER";
+    document.getElementById("lostMessage").innerHTML = "GAME OVER";
     gameState = false;
     document.onkeydown = null;
 }
