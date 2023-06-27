@@ -6,7 +6,7 @@ function checkKey(e) {
         return;
     }
     e = e || window.event;
-    if ((e.keyCode == '38' || e.keyCode == '87') && playerId[0] > 1) { //up
+    if ((e.keyCode == '38' || e.keyCode == '87') && playerId[0] > 0) { //up
         document.getElementById(playerId).className = "btn btn-warning";
         playerId = --playerId[0] + playerId[1];
         document.getElementById(playerId).className = "btn btn-dark";
@@ -46,12 +46,13 @@ function checkKey(e) {
 // }
 
 let rock = "0" + Math.floor(Math.random() * 7);
-let intervalID = window.setInterval(moveRock, 100);
+let intervalID = window.setInterval(moveRock, 1000);
 let scoreValue = 0;
 let gameState = true;
 
 function checkIfHit() {
-    if (document.getElementById(++rock[0] + rock[1]).className === "btn btn-dark") {
+    if (document.getElementById(++rock[0] + rock[1]).className === "btn btn-dark" ||
+        document.getElementById(rock[0] + rock[1]).className === "btn btn-dark") {
         document.getElementById("lost").innerHTML = "GAME OVER";
         gameState = false;
     }
@@ -65,12 +66,15 @@ function moveRock() {
     document.getElementById(rock).className = "btn btn-danger";
     if (rock[0] < 5) {
         checkIfHit();
-        document.getElementById(rock).className = "btn btn-warning";
         rock = ++rock[0] + rock[1];
         document.getElementById(rock).className = "btn btn-danger";
+        if (document.getElementById(--rock[0] + rock[1]).className === "btn btn-danger") {
+            document.getElementById(--rock[0] + rock[1]).className = "btn btn-warning";
+        }
     } else {
         document.getElementById(rock).className = "btn btn-warning";
         rock = "0" + Math.floor(Math.random() * 7);
+        checkIfHit();
         document.getElementById(rock).className = "btn btn-danger";
         document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
     }
