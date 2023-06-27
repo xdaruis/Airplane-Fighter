@@ -2,8 +2,11 @@ document.onkeydown = checkKey;
 let playerId = "53";
 
 function checkKey(e) {
+    if (!gameState) {
+        return;
+    }
     e = e || window.event;
-    if ((e.keyCode == '38' || e.keyCode == '87') && playerId[0] > 0) { //up
+    if ((e.keyCode == '38' || e.keyCode == '87') && playerId[0] > 1) { //up
         document.getElementById(playerId).className = "btn btn-warning";
         playerId = --playerId[0] + playerId[1];
         document.getElementById(playerId).className = "btn btn-dark";
@@ -28,7 +31,7 @@ function checkKey(e) {
 
 // setInterval(createRock, 1000);
 
-document.onclick = createRock;
+// document.onclick = createRock;
 
 // function moveRock(rock) {
 //     document.getElementById(rock).className = "btn btn-warning";
@@ -43,10 +46,25 @@ document.onclick = createRock;
 // }
 
 let rock = "0" + Math.floor(Math.random() * 7);
+let intervalID = window.setInterval(moveRock, 100);
+let scoreValue = 0;
+let gameState = true;
+
+function checkIfHit() {
+    if (document.getElementById(++rock[0] + rock[1]).className === "btn btn-dark") {
+        document.getElementById("lost").innerHTML = "GAME OVER";
+        gameState = false;
+    }
+}
 
 function moveRock() {
+    if (!gameState) {
+        clearInterval(intervalID);
+        return;
+    }
     document.getElementById(rock).className = "btn btn-danger";
     if (rock[0] < 5) {
+        checkIfHit();
         document.getElementById(rock).className = "btn btn-warning";
         rock = ++rock[0] + rock[1];
         document.getElementById(rock).className = "btn btn-danger";
@@ -54,11 +72,10 @@ function moveRock() {
         document.getElementById(rock).className = "btn btn-warning";
         rock = "0" + Math.floor(Math.random() * 7);
         document.getElementById(rock).className = "btn btn-danger";
-
+        document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
     }
 }
 
-let intervalID = window.setInterval(moveRock, 1000);
 
 // function myCallback() {
 //  // Your code here
