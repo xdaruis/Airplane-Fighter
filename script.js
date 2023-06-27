@@ -2,25 +2,23 @@ document.onkeydown = checkKey;
 let playerId = "53";
 
 function checkKey(e) {
-    if (!gameState) {
-        return;
-    }
     e = e || window.event;
     if ((e.keyCode == '38' || e.keyCode == '87') && playerId[0] > 0) { //up
         document.getElementById(playerId).className = "btn btn-warning";
         playerId = --playerId[0] + playerId[1];
-        document.getElementById(playerId).className = "btn btn-dark";
     } else if ((e.keyCode == '40' || e.keyCode == '83') && playerId[0] < 5) { //down
         document.getElementById(playerId).className = "btn btn-warning";
         playerId = ++playerId[0] + playerId[1];
-        document.getElementById(playerId).className = "btn btn-dark";
     } else if ((e.keyCode == '37' || e.keyCode == '65') && playerId[1] > 0) { // left
         document.getElementById(playerId).className = "btn btn-warning";
         playerId = playerId[0] + --playerId[1];
-        document.getElementById(playerId).className = "btn btn-dark";
     } else if ((e.keyCode == '39' || e.keyCode == '68') && playerId[1] < 6) { // right
         document.getElementById(playerId).className = "btn btn-warning";
         playerId = playerId[0] + ++playerId[1];
+    }
+    if (document.getElementById(playerId).className === "btn btn-danger") {
+        gameOver();
+    } else {
         document.getElementById(playerId).className = "btn btn-dark";
     }
 }
@@ -46,15 +44,21 @@ function checkKey(e) {
 // }
 
 let rock = "0" + Math.floor(Math.random() * 7);
-let intervalID = window.setInterval(moveRock, 1000);
+document.getElementById(rock).className = "btn btn-danger";
+let intervalID = window.setInterval(moveRock, 100);
 let scoreValue = 0;
 let gameState = true;
+
+function gameOver() {
+    document.getElementById("lost").innerHTML = "GAME OVER";
+    gameState = false;
+    document.onkeydown = null;
+}
 
 function checkIfHit() {
     if (document.getElementById(++rock[0] + rock[1]).className === "btn btn-dark" ||
         document.getElementById(rock[0] + rock[1]).className === "btn btn-dark") {
-        document.getElementById("lost").innerHTML = "GAME OVER";
-        gameState = false;
+        gameOver();
     }
 }
 
@@ -74,7 +78,9 @@ function moveRock() {
     } else {
         document.getElementById(rock).className = "btn btn-warning";
         rock = "0" + Math.floor(Math.random() * 7);
-        checkIfHit();
+        if (document.getElementById(rock).className === "btn btn-dark") {
+            gameOver();
+        }
         document.getElementById(rock).className = "btn btn-danger";
         document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
     }
