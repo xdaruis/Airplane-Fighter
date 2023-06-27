@@ -1,4 +1,4 @@
-document.onkeydown = moveShip;
+document.onkeydown = movePlayer;
 
 let playerId = "53";
 
@@ -10,7 +10,7 @@ let rockSpeed = window.setInterval(dropRock, 100);
 let scoreValue = 0;
 let gameState = true;
 
-function moveShip(e) {
+function movePlayer(e) {
     e = e || window.event;
     document.getElementById(playerId).className = "btn btn-warning";
     if ((e.keyCode == '38' || e.keyCode == '87') && playerId[0] > 0) { // up
