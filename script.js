@@ -1,5 +1,3 @@
-document.onkeydown = movePlayer;
-
 let playerId = "53";
 
 let rock = "0" + Math.floor(Math.random() * 7);
@@ -20,6 +18,8 @@ const directions = {
 };
 
 const lines = 5, columns = 6;
+
+document.onkeydown = movePlayer;
 
 function movePlayer(e) {
     e = e || window.event;
