@@ -1,12 +1,21 @@
-document.onkeydown = checkKey;
+document.onkeydown = moveShip;
+
 let playerId = "53";
 
-function checkKey(e) {
+let rock = "0" + Math.floor(Math.random() * 7);
+document.getElementById(rock).className = "btn btn-danger";
+
+let rockSpeed = window.setInterval(dropRock, 100);
+
+let scoreValue = 0;
+let gameState = true;
+
+function moveShip(e) {
     e = e || window.event;
-    if ((e.keyCode == '38' || e.keyCode == '87') && playerId[0] > 0) { //up
+    if ((e.keyCode == '38' || e.keyCode == '87') && playerId[0] > 0) { // up
         document.getElementById(playerId).className = "btn btn-warning";
         playerId = --playerId[0] + playerId[1];
-    } else if ((e.keyCode == '40' || e.keyCode == '83') && playerId[0] < 5) { //down
+    } else if ((e.keyCode == '40' || e.keyCode == '83') && playerId[0] < 5) { // down
         document.getElementById(playerId).className = "btn btn-warning";
         playerId = ++playerId[0] + playerId[1];
     } else if ((e.keyCode == '37' || e.keyCode == '65') && playerId[1] > 0) { // left
@@ -23,53 +32,27 @@ function checkKey(e) {
     }
 }
 
-// let rock = "0" + Math.floor(Math.random() * 7);
-// alert(rock);
-
-
-// setInterval(createRock, 1000);
-
-// document.onclick = createRock;
-
-// function moveRock(rock) {
-//     document.getElementById(rock).className = "btn btn-warning";
-//     if (rock[0] < 5) {
-//         rock = ++rock[0] + rock[1];
-//         alert(rock);
-//         document.getElementById(rock).className = "btn btn-danger";
-//         // setTimeout(moveRock(rock), 3000);
-//     } else {
-//         clearInterval(interval);
-//     }
-// }
-
-let rock = "0" + Math.floor(Math.random() * 7);
-document.getElementById(rock).className = "btn btn-danger";
-let intervalID = window.setInterval(moveRock, 100);
-let scoreValue = 0;
-let gameState = true;
-
 function gameOver() {
     document.getElementById("lost").innerHTML = "GAME OVER";
     gameState = false;
     document.onkeydown = null;
 }
 
-function checkIfHit() {
+function checkIfRockHit() {
     if (document.getElementById(++rock[0] + rock[1]).className === "btn btn-dark" ||
         document.getElementById(rock[0] + rock[1]).className === "btn btn-dark") {
         gameOver();
     }
 }
 
-function moveRock() {
+function dropRock() {
     if (!gameState) {
-        clearInterval(intervalID);
+        clearInterval(rockSpeed);
         return;
     }
     document.getElementById(rock).className = "btn btn-danger";
     if (rock[0] < 5) {
-        checkIfHit();
+        checkIfRockHit();
         rock = ++rock[0] + rock[1];
         document.getElementById(rock).className = "btn btn-danger";
         if (document.getElementById(--rock[0] + rock[1]).className === "btn btn-danger") {
@@ -85,32 +68,3 @@ function moveRock() {
         document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
     }
 }
-
-
-// function myCallback() {
-//  // Your code here
-// }
-
-
-// sleep(500).then(() => {
-//     // Do something after the sleep!
-//     rock = ++rock[0] + rock[1];
-// });
-
-// function sleep(time) {
-//     return new Promise((resolve) => setTimeout(resolve, time));
-//   }
-  
-  // Usage!
-
-
-// const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
-
-// async function repeatedGreetingsLoop() {
-//   for (let i = 1; i <= 5; i++) {
-//     await sleepNow(1000)
-//     console.log(`Hello #${i}`)
-//   }
-// }
-
-// repeatedGreetingsLoop()
