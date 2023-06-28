@@ -4,7 +4,7 @@ let rock = "0" + Math.floor(Math.random() * 7);
 document.getElementById(rock).className = "btn btn-danger";
 
 let rockSpeed = 150;
-let rockInterval = window.setInterval(dropRock, rockSpeed);
+let rockInterval = window.setInterval(handleRock, rockSpeed);
 
 let scoreValue = 0;
 
@@ -34,10 +34,10 @@ function movePlayer(e) {
     } else if (directions[e.keyCode] === 'right' && playerId[1] < columns) {
         playerId = playerId[0] + ++playerId[1];
     }
-    checkIfPlaneHitRock();
+    checkIfPlayerHitRock();
 }
 
-function checkIfPlaneHitRock() {
+function checkIfPlayerHitRock() {
     if (document.getElementById(playerId).className === "btn btn-danger") {
         gameOver();
     } else {
@@ -51,7 +51,7 @@ function gameOver() {
     clearInterval(rockInterval);
 }
 
-function checkIfRockHit() {
+function checkIfRockHitPlayer() {
     if (document.getElementById(++rock[0] + rock[1]).className === "btn btn-dark" ||
         document.getElementById(rock[0] + rock[1]).className === "btn btn-dark") {
         gameOver();
@@ -59,23 +59,31 @@ function checkIfRockHit() {
 }
 
 function dropRock() {
-    if (rock[0] < 5) {
-        checkIfRockHit();
-        rock = ++rock[0] + rock[1];
-        document.getElementById(rock).className = "btn btn-danger";
-        if (document.getElementById(--rock[0] + rock[1]).className === "btn btn-danger") {
-            document.getElementById(--rock[0] + rock[1]).className = "btn btn-warning";
-        }
+    checkIfRockHitPlayer();
+    rock = ++rock[0] + rock[1];
+    document.getElementById(rock).className = "btn btn-danger";
+    if (document.getElementById(--rock[0] + rock[1]).className === "btn btn-danger") {
+        document.getElementById(--rock[0] + rock[1]).className = "btn btn-warning";
+    }
+}
+
+function respawnRock() {
+    document.getElementById(rock).className = "btn btn-warning";
+    rock = "0" + Math.floor(Math.random() * 7);
+    if (document.getElementById(rock).className === "btn btn-dark") {
+        gameOver();
     } else {
-        document.getElementById(rock).className = "btn btn-warning";
-        rock = "0" + Math.floor(Math.random() * 7);
-        if (document.getElementById(rock).className === "btn btn-dark") {
-            gameOver();
-        } else {
-            clearInterval(rockInterval);
-            rockInterval = window.setInterval(dropRock, --rockSpeed);
-        }
-        document.getElementById(rock).className = "btn btn-danger";
-        document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
+        clearInterval(rockInterval);
+        rockInterval = window.setInterval(handleRock, --rockSpeed);
+    }
+    document.getElementById(rock).className = "btn btn-danger";
+    document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
+}
+
+function handleRock() {
+    if (rock[0] < 5) {
+        dropRock();
+    } else {
+        respawnRock();
     }
 }
