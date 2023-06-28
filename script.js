@@ -20,7 +20,6 @@ const directions = {
 };
 
 const lines = 5, columns = 6;
-
 document.onkeydown = movePlayer;
 
 function movePlayer(e) {
@@ -72,10 +71,11 @@ function dropRock() {
         rock = "0" + Math.floor(Math.random() * 7);
         if (document.getElementById(rock).className === "btn btn-dark") {
             gameOver();
+        } else {
+            clearInterval(rockInterval);
+            rockInterval = window.setInterval(dropRock, --rockSpeed);
         }
         document.getElementById(rock).className = "btn btn-danger";
         document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
-        clearInterval(rockInterval);
-        rockInterval = window.setInterval(dropRock, --rockSpeed);
     }
 }
