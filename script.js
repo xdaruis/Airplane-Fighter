@@ -3,7 +3,9 @@ let playerId = "53";
 let rock = "0" + Math.floor(Math.random() * 7);
 document.getElementById(rock).className = "btn btn-danger";
 
-let rockSpeed = window.setInterval(dropRock, 100);
+let rockSpeed = 150;
+let rockInterval = window.setInterval(dropRock, rockSpeed);
+
 let scoreValue = 0;
 
 const directions = {
@@ -33,6 +35,10 @@ function movePlayer(e) {
     } else if (directions[e.keyCode] === 'right' && playerId[1] < columns) {
         playerId = playerId[0] + ++playerId[1];
     }
+    checkIfPlaneHitRock();
+}
+
+function checkIfPlaneHitRock() {
     if (document.getElementById(playerId).className === "btn btn-danger") {
         gameOver();
     } else {
@@ -43,7 +49,7 @@ function movePlayer(e) {
 function gameOver() {
     document.getElementById("lostMessage").innerHTML = "GAME OVER";
     document.onkeydown = null;
-    clearInterval(rockSpeed);
+    clearInterval(rockInterval);
 }
 
 function checkIfRockHit() {
@@ -69,5 +75,7 @@ function dropRock() {
         }
         document.getElementById(rock).className = "btn btn-danger";
         document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
+        clearInterval(rockInterval);
+        rockInterval = window.setInterval(dropRock, --rockSpeed);
     }
 }
