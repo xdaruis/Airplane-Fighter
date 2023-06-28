@@ -51,6 +51,14 @@ function gameOver() {
     clearInterval(rockInterval);
 }
 
+function handleRock() {
+    if (rock[0] < 5) {
+        dropRock();
+    } else {
+        respawnRock();
+    }
+}
+
 function checkIfRockHitPlayer() {
     if (document.getElementById(++rock[0] + rock[1]).className === "btn btn-dark" ||
         document.getElementById(rock[0] + rock[1]).className === "btn btn-dark") {
@@ -78,12 +86,4 @@ function respawnRock() {
     }
     document.getElementById(rock).className = "btn btn-danger";
     document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
-}
-
-function handleRock() {
-    if (rock[0] < 5) {
-        dropRock();
-    } else {
-        respawnRock();
-    }
 }
