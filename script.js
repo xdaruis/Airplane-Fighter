@@ -24,7 +24,7 @@ let rockY = Math.floor(Math.random() * columns) + 1;
 let rockId = "" + rockX + " " + rockY;
 document.getElementById(rockId).className = "btn btn-danger";
 
-// Set rock falling speed
+// Set rock falling speed (smaller value goes faster)
 let rockSpeed = 150;
 let rockInterval = window.setInterval(handleRock, rockSpeed);
 
