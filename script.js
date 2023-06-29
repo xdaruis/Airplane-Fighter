@@ -92,7 +92,7 @@ function handleRock() {
 
 function checkIfRockHitPlayer() {
     if (document.getElementById("" + (rockX + 1)+ " " + rockY).className === "btn btn-dark" ||
-        document.getElementById("" + rockX + " " + rockY).className === "btn btn-dark") {
+        document.getElementById(rockId).className === "btn btn-dark") {
         gameOver();
     }
 }
