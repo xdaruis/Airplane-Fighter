@@ -52,14 +52,15 @@ function movePlayer(e) {
     e = e || window.event;
     document.getElementById(playerId).className = "btn btn-warning";
     if (directions[e.keyCode] === 'up' && playerX > 1) {
-        playerId = "" + --playerX + " " + playerY;
+        --playerX;
     } else if (directions[e.keyCode] === 'down' && playerX < lines) {
-        playerId = "" + ++playerX + " " + playerY;
+        ++playerX;
     } else if (directions[e.keyCode] === 'left' && playerY > 1) {
-        playerId = "" + playerX + " " + --playerY;
+        --playerY;
     } else if (directions[e.keyCode] === 'right' && playerY < columns) {
-        playerId = "" + playerX + " " + ++playerY;
+        ++playerY;
     }
+    playerId = "" + playerX + " " + playerY;
     checkIfPlayerHitRock();
 }
 
@@ -91,7 +92,7 @@ function handleRock() {
 }
 
 function checkIfRockHitPlayer() {
-    if (document.getElementById("" + (rockX + 1)+ " " + rockY).className === "btn btn-dark" ||
+    if (document.getElementById("" + (rockX + 1) + " " + rockY).className === "btn btn-dark" ||
         document.getElementById(rockId).className === "btn btn-dark") {
         gameOver();
     }
@@ -100,7 +101,8 @@ function checkIfRockHitPlayer() {
 function dropRock() {
     checkIfRockHitPlayer();
     document.getElementById(rockId).className = "btn btn-warning";
-    rockId = "" + ++rockX + " " + rockY;
+    ++rockX;
+    rockId = "" + rockX + " " + rockY;
     document.getElementById(rockId).className = "btn btn-danger";
 }
 
@@ -113,8 +115,10 @@ function respawnRock() {
         gameOver();
     } else {
         clearInterval(rockInterval);
-        rockInterval = window.setInterval(handleRock, --rockSpeed);
+        --rockSpeed;
+        rockInterval = window.setInterval(handleRock, rockSpeed);
     }
     document.getElementById(rockId).className = "btn btn-danger";
-    document.getElementById("scorePoints").innerHTML = "Score: " + ++scoreValue;
+    ++scoreValue;
+    document.getElementById("scorePoints").innerHTML = "Score: " + scoreValue;
 }
